@@ -2,6 +2,10 @@ package com.bridgelabz.lambdaexpression;
 interface MathOperation
 {
     double calculate(double x, double y);
+    static void showResult(MathOperation operation, double x, double y, String operationName) {
+        double result = operation.calculate(x, y);
+        System.out.println(operationName + " is: " + result);
+    }
 }
 public class MathOperationApp {
     public static void main(String[] args) {
@@ -10,9 +14,9 @@ public class MathOperationApp {
         MathOperation multiply = (x,y)->x*y;
         MathOperation divide = (x,y)->x/y;
 
-        System.out.println("Addition is : "+add.calculate(10,5));
-        System.out.println("Subtraction is : "+subtract.calculate(10,5));
-        System.out.println("Multiplication is : "+multiply.calculate(10,5));
-        System.out.println("Division is : "+divide.calculate(10,5));
+        MathOperation.showResult(add,10,5,"Addition");
+        MathOperation.showResult(subtract,10,5,"Subtraction");
+        MathOperation.showResult(multiply,10,5,"Multiplication");
+        MathOperation.showResult(divide,10,5,"Division");
     }
 }
