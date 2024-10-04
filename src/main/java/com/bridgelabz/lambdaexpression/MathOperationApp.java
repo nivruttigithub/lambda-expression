@@ -1,22 +1,57 @@
 package com.bridgelabz.lambdaexpression;
-interface MathOperation
-{
-    double calculate(double x, double y);
-    static void showResult(MathOperation operation, double x, double y, String operationName) {
-        double result = operation.calculate(x, y);
-        System.out.println(operationName + " is: " + result);
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+class NumberPlayList {
+
+    private List<Integer> numberList = new ArrayList<>();
+
+    public void addNumber(Integer number) {
+        numberList.add(number);
+    }
+    
+    public void iterateUsingClass() {
+        class MyConsumer implements Consumer<Integer> {
+            public void accept(Integer number) {
+                System.out.println("Class-based iteration: " + number);
+            }
+        }
+
+        numberList.forEach(new MyConsumer());
+    }
+
+    public void iterateUsingAnonymousClass() {
+        numberList.forEach(new Consumer<Integer>() {
+            @Override
+            public void accept(Integer number) {
+                System.out.println("Anonymous class iteration: " + number);
+            }
+        });
+    }
+
+    public void iterateUsingLambda() {
+        numberList.forEach(number -> System.out.println("Lambda iteration: " + number));
     }
 }
 public class MathOperationApp {
     public static void main(String[] args) {
-        MathOperation add = Double::sum;  //Using Method Reference
-        MathOperation subtract = (x,y)->x-y;
-        MathOperation multiply = (x,y)->x*y;
-        MathOperation divide = (x,y)->x/y;
+        NumberPlayList numberPlayList = new NumberPlayList();
 
-        MathOperation.showResult(add,10,5,"Addition");
-        MathOperation.showResult(subtract,10,5,"Subtraction");
-        MathOperation.showResult(multiply,10,5,"Multiplication");
-        MathOperation.showResult(divide,10,5,"Division");
+        numberPlayList.addNumber(10);
+        numberPlayList.addNumber(20);
+        numberPlayList.addNumber(30);
+        numberPlayList.addNumber(40);
+
+        System.out.println("Iteration using Class:");
+        numberPlayList.iterateUsingClass();
+
+        System.out.println("\nIteration using Anonymous Class:");
+        numberPlayList.iterateUsingAnonymousClass();
+
+        System.out.println("\nIteration using Lambda:");
+        numberPlayList.iterateUsingLambda();
+
     }
 }
